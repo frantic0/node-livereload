@@ -220,7 +220,10 @@ class Server extends EventEmitter
 exports.createServer = (config = {}, callback) ->
   requestHandler = ( req, res )->
     if url.parse(req.url).pathname is '/livereload.js'
-      res.writeHead(200, {'Content-Type': 'text/javascript'})
+      res.writeHead(200, {
+				'Content-Type': 'text/javascript',
+				'Access-Control-Allow-Origin': '*',
+			})
       res.end fs.readFileSync require.resolve 'livereload-js'
   if !config.https?
     app = http.createServer requestHandler
